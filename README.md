@@ -1,3 +1,6 @@
+##### WIP #####
+#LAST UPDATE : 12/07/2025
+
 # CONTEXT WORKFLOW - AI-Powered Development Framework
 
 A comprehensive workflow system that transforms Product Requirements Documents (PRDs) into actionable implementation plans using AI assistance.
