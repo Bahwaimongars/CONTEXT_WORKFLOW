@@ -1,428 +1,287 @@
-# Project Structure Guide
+# Project Structure
 
-This document provides examples of well-organized project structures for different types of applications. Use these as templates to maintain consistency and scalability.
-
-## Next.js 15 with App Router - Complete Example
-
-### Basic Structure
+## Root Directory
 
 ```
-my-nextjs-app/
-├── README.md
-├── next.config.js
-├── package.json
-├── tailwind.config.js
-├── tsconfig.json
-├── .env.local
-├── .env.example
-├── .gitignore
-├── public/
-│   ├── favicon.ico
-│   ├── images/
-│   └── icons/
+wireframe-generator/
 ├── src/
-│   ├── app/                    # App Router (Next.js 15)
-│   │   ├── globals.css
-│   │   ├── layout.tsx          # Root layout
-│   │   ├── page.tsx            # Home page
-│   │   ├── loading.tsx         # Loading UI
-│   │   ├── error.tsx           # Error UI
-│   │   ├── not-found.tsx       # 404 page
-│   │   ├── (auth)/             # Route groups
+│   ├── app/
+│   │   ├── (auth)/
 │   │   │   ├── login/
 │   │   │   │   └── page.tsx
 │   │   │   └── register/
 │   │   │       └── page.tsx
+│   │   ├── api/
+│   │   │   ├── upload/
+│   │   │   │   └── route.ts
+│   │   │   ├── wireframes/
+│   │   │   │   └── route.ts
+│   │   │   └── ai/
+│   │   │       └── generate/
+│   │   │           └── route.ts
 │   │   ├── dashboard/
 │   │   │   ├── page.tsx
-│   │   │   ├── layout.tsx
-│   │   │   ├── loading.tsx
-│   │   │   └── settings/
-│   │   │       └── page.tsx
-│   │   └── api/                # API routes
-│   │       ├── auth/
-│   │       │   └── route.ts
-│   │       ├── tasks/
-│   │       │   ├── route.ts
-│   │       │   └── [id]/
-│   │       │       └── route.ts
-│   │       └── users/
-│   │           └── route.ts
-│   ├── components/             # Reusable components
-│   │   ├── ui/                 # Base UI components
+│   │   │   └── layout.tsx
+│   │   ├── wireframes/
+│   │   │   ├── [id]/
+│   │   │   │   └── page.tsx
+│   │   │   └── page.tsx
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   ├── loading.tsx
+│   │   ├── error.tsx
+│   │   └── not-found.tsx
+│   ├── components/
+│   │   ├── ui/
 │   │   │   ├── button.tsx
 │   │   │   ├── input.tsx
-│   │   │   ├── modal.tsx
-│   │   │   └── index.ts
-│   │   ├── forms/              # Form components
-│   │   │   ├── login-form.tsx
-│   │   │   └── task-form.tsx
-│   │   ├── layout/             # Layout components
+│   │   │   ├── card.tsx
+│   │   │   ├── dialog.tsx
+│   │   │   └── toast.tsx
+│   │   ├── layout/
 │   │   │   ├── header.tsx
 │   │   │   ├── sidebar.tsx
 │   │   │   └── footer.tsx
-│   │   └── features/           # Feature-specific components
-│   │       ├── tasks/
-│   │       │   ├── task-list.tsx
-│   │       │   ├── task-item.tsx
-│   │       │   └── task-filters.tsx
-│   │       └── auth/
-│   │           ├── login-button.tsx
-│   │           └── user-profile.tsx
-│   ├── lib/                    # Utility functions and configurations
-│   │   ├── auth.ts             # Authentication config
-│   │   ├── db.ts               # Database connection
-│   │   ├── utils.ts            # General utilities
-│   │   ├── validations.ts      # Zod schemas
-│   │   └── constants.ts        # App constants
-│   ├── hooks/                  # Custom React hooks
-│   │   ├── use-auth.ts
-│   │   ├── use-tasks.ts
-│   │   └── use-local-storage.ts
-│   ├── store/                  # State management
-│   │   ├── auth-store.ts
-│   │   ├── task-store.ts
-│   │   └── ui-store.ts
-│   ├── types/                  # TypeScript type definitions
+│   │   ├── features/
+│   │   │   ├── file-upload/
+│   │   │   │   ├── upload-zone.tsx
+│   │   │   │   └── file-list.tsx
+│   │   │   ├── wireframe/
+│   │   │   │   ├── wireframe-viewer.tsx
+│   │   │   │   ├── wireframe-editor.tsx
+│   │   │   │   └── wireframe-export.tsx
+│   │   │   └── dashboard/
+│   │   │       ├── stats-card.tsx
+│   │   │       └── recent-files.tsx
+│   │   └── common/
+│   │       ├── loading-spinner.tsx
+│   │       └── error-boundary.tsx
+│   ├── lib/
+│   │   ├── db/
+│   │   │   ├── prisma.ts
+│   │   │   └── migrations/
+│   │   ├── auth/
+│   │   │   ├── config.ts
+│   │   │   └── providers.ts
+│   │   ├── ai/
+│   │   │   ├── openai.ts
+│   │   │   └── prompts.ts
+│   │   ├── utils/
+│   │   │   ├── file-processing.ts
+│   │   │   ├── validation.ts
+│   │   │   └── formatting.ts
+│   │   └── constants/
+│   │       ├── config.ts
+│   │       └── types.ts
+│   ├── types/
+│   │   ├── global.d.ts
 │   │   ├── auth.ts
-│   │   ├── task.ts
+│   │   ├── wireframe.ts
 │   │   └── api.ts
-│   └── styles/                 # Global styles
+│   └── styles/
 │       ├── globals.css
 │       └── components.css
-├── prisma/                     # Database schema and migrations
+├── prisma/
 │   ├── schema.prisma
 │   ├── migrations/
 │   └── seed.ts
-├── tests/                      # Test files
+├── public/
+│   ├── images/
+│   ├── icons/
+│   └── favicon.ico
+├── docs/
+│   ├── api.md
+│   ├── deployment.md
+│   └── development.md
+├── tests/
 │   ├── __mocks__/
 │   ├── components/
-│   ├── pages/
+│   ├── api/
 │   └── utils/
-└── docs/                       # Documentation
-    ├── api.md
-    └── deployment.md
+├── .env.local
+├── .env.example
+├── .gitignore
+├── next.config.js
+├── tailwind.config.js
+├── tsconfig.json
+├── package.json
+├── README.md
+└── vercel.json
 ```
 
-## Feature-Based Organization (Recommended for Large Apps)
+## Detailed Structure
 
-```
-src/
-├── app/
-│   ├── (auth)/
-│   │   ├── login/page.tsx
-│   │   └── register/page.tsx
-│   ├── (dashboard)/
-│   │   ├── layout.tsx
-│   │   ├── page.tsx
-│   │   ├── tasks/
-│   │   │   ├── page.tsx
-│   │   │   ├── [id]/
-│   │   │   │   ├── page.tsx
-│   │   │   │   └── edit/page.tsx
-│   │   │   └── new/page.tsx
-│   │   ├── projects/
-│   │   │   ├── page.tsx
-│   │   │   └── [id]/page.tsx
-│   │   └── settings/
-│   │       ├── page.tsx
-│   │       ├── profile/page.tsx
-│   │       └── preferences/page.tsx
-│   └── api/
-│       ├── auth/[...nextauth]/route.ts
-│       ├── tasks/route.ts
-│       └── projects/route.ts
-├── features/                   # Feature-based modules
-│   ├── auth/
-│   │   ├── components/
-│   │   │   ├── login-form.tsx
-│   │   │   └── register-form.tsx
-│   │   ├── hooks/
-│   │   │   └── use-auth.ts
-│   │   ├── services/
-│   │   │   └── auth-service.ts
-│   │   └── types/
-│   │       └── auth.types.ts
-│   ├── tasks/
-│   │   ├── components/
-│   │   │   ├── task-list.tsx
-│   │   │   ├── task-item.tsx
-│   │   │   ├── task-form.tsx
-│   │   │   └── task-filters.tsx
-│   │   ├── hooks/
-│   │   │   ├── use-tasks.ts
-│   │   │   └── use-task-filters.ts
-│   │   ├── services/
-│   │   │   └── task-service.ts
-│   │   └── types/
-│   │       └── task.types.ts
-│   └── projects/
-│       ├── components/
-│       ├── hooks/
-│       ├── services/
-│       └── types/
-├── shared/                     # Shared across features
-│   ├── components/
-│   │   ├── ui/
-│   │   ├── layout/
-│   │   └── common/
-│   ├── hooks/
-│   ├── utils/
-│   ├── types/
-│   └── constants/
-└── lib/
-    ├── auth.ts
-    ├── db.ts
-    └── utils.ts
-```
+### `/src/app` - Next.js App Router
 
-## App Router Routing Examples
+- **Purpose:** Main application routes using Next.js 15 App Router
+- **Key Files:**
+  - `layout.tsx` - Root layout with global providers
+  - `page.tsx` - Home page with file upload interface
+  - `globals.css` - Global styles and Tailwind imports
+  - `loading.tsx` - Global loading UI
+  - `error.tsx` - Global error handling
 
-### 1. Basic Pages
+### `/src/app/(auth)` - Authentication Routes
 
-```
-app/
-├── page.tsx                    # / (home)
-├── about/page.tsx              # /about
-├── contact/page.tsx            # /contact
-└── blog/
-    ├── page.tsx                # /blog
-    └── [slug]/page.tsx         # /blog/[slug]
-```
+- **Purpose:** Authentication-related pages using route groups
+- **Files:**
+  - `login/page.tsx` - User login page
+  - `register/page.tsx` - User registration page
 
-### 2. Dynamic Routes
+### `/src/app/api` - API Routes
 
-```
-app/
-├── products/
-│   ├── page.tsx                # /products
-│   ├── [id]/page.tsx           # /products/123
-│   └── [id]/
-│       ├── page.tsx            # /products/123
-│       ├── reviews/page.tsx    # /products/123/reviews
-│       └── edit/page.tsx       # /products/123/edit
-└── users/
-    ├── [userId]/
-    │   ├── page.tsx            # /users/456
-    │   └── posts/
-    │       ├── page.tsx        # /users/456/posts
-    │       └── [postId]/page.tsx # /users/456/posts/789
-```
+- **Purpose:** Server-side API endpoints
+- **Structure:**
+  - `upload/route.ts` - File upload handling
+  - `wireframes/route.ts` - Wireframe CRUD operations
+  - `ai/generate/route.ts` - AI wireframe generation endpoint
 
-### 3. Route Groups (Organization without affecting URL)
+### `/src/app/dashboard` - Dashboard Pages
 
-```
-app/
-├── (marketing)/
-│   ├── page.tsx                # /
-│   ├── about/page.tsx          # /about
-│   └── contact/page.tsx        # /contact
-├── (dashboard)/
-│   ├── layout.tsx              # Dashboard layout
-│   ├── dashboard/page.tsx      # /dashboard
-│   ├── settings/page.tsx       # /settings
-│   └── profile/page.tsx        # /profile
-└── (auth)/
-    ├── login/page.tsx          # /login
-    └── register/page.tsx       # /register
-```
+- **Purpose:** User dashboard and file management
+- **Files:**
+  - `page.tsx` - Main dashboard view
+  - `layout.tsx` - Dashboard-specific layout
 
-### 4. Parallel Routes
+### `/src/app/wireframes` - Wireframe Pages
 
-```
-app/
-├── @sidebar/
-│   ├── default.tsx
-│   └── settings/page.tsx
-├── @main/
-│   ├── default.tsx
-│   └── settings/page.tsx
-├── layout.tsx                  # Renders both @sidebar and @main
-└── settings/page.tsx
-```
+- **Purpose:** Wireframe viewing and editing
+- **Files:**
+  - `page.tsx` - Wireframe list view
+  - `[id]/page.tsx` - Individual wireframe view
 
-### 5. Intercepting Routes
+### `/src/components` - React Components
 
-```
-app/
-├── feed/
-│   ├── page.tsx
-│   └── @modal/
-│       └── (..)photo/
-│           └── [id]/page.tsx   # Intercepts /photo/[id]
-├── photo/
-│   └── [id]/page.tsx           # /photo/123
-└── layout.tsx
-```
+- **Purpose:** Reusable UI components organized by category
+- **Structure:**
+  - `ui/` - Basic UI components (buttons, inputs, etc.)
+  - `layout/` - Layout components (header, sidebar, footer)
+  - `features/` - Feature-specific components
+  - `common/` - Common utility components
 
-## Component Organization Patterns
+### `/src/lib` - Utility Libraries
 
-### 1. UI Components (Design System)
+- **Purpose:** Application logic and utilities
+- **Structure:**
+  - `db/` - Database configuration and Prisma client
+  - `auth/` - Authentication configuration
+  - `ai/` - AI service integration
+  - `utils/` - Utility functions
+  - `constants/` - Application constants
 
-```
-components/ui/
-├── button/
-│   ├── button.tsx
-│   ├── button.stories.tsx
-│   ├── button.test.tsx
-│   └── index.ts
-├── input/
-│   ├── input.tsx
-│   ├── input.stories.tsx
-│   └── index.ts
-├── modal/
-│   ├── modal.tsx
-│   ├── modal-header.tsx
-│   ├── modal-body.tsx
-│   ├── modal-footer.tsx
-│   └── index.ts
-└── index.ts                    # Export all components
-```
+### `/src/types` - TypeScript Types
 
-### 2. Feature Components
+- **Purpose:** TypeScript type definitions
+- **Files:**
+  - `global.d.ts` - Global type declarations
+  - `auth.ts` - Authentication types
+  - `wireframe.ts` - Wireframe-related types
+  - `api.ts` - API response types
 
-```
-components/features/
-├── tasks/
-│   ├── task-list/
-│   │   ├── task-list.tsx
-│   │   ├── task-list.test.tsx
-│   │   └── index.ts
-│   ├── task-item/
-│   │   ├── task-item.tsx
-│   │   ├── task-item.test.tsx
-│   │   └── index.ts
-│   └── index.ts
-└── auth/
-    ├── login-form/
-    ├── register-form/
-    └── index.ts
-```
+### `/prisma` - Database Schema
 
-## Configuration Files Structure
+- **Purpose:** Database schema and migrations
+- **Files:**
+  - `schema.prisma` - Database schema definition
+  - `migrations/` - Database migration files
+  - `seed.ts` - Database seeding script
 
-### 1. Next.js Configuration
+### `/public` - Static Assets
 
-```javascript
-// next.config.js
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
-  images: {
-    domains: ["example.com"],
-  },
-  env: {
-    CUSTOM_KEY: process.env.CUSTOM_KEY,
-  },
-};
+- **Purpose:** Static files served directly
+- **Structure:**
+  - `images/` - Image assets
+  - `icons/` - Icon files
+  - `favicon.ico` - Site favicon
 
-module.exports = nextConfig;
-```
+### `/tests` - Test Files
 
-### 2. TypeScript Configuration
+- **Purpose:** Application testing
+- **Structure:**
+  - `__mocks__/` - Mock files for testing
+  - `components/` - Component tests
+  - `api/` - API endpoint tests
+  - `utils/` - Utility function tests
 
-```json
-// tsconfig.json
-{
-  "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "es6"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/components/*": ["./src/components/*"],
-      "@/lib/*": ["./src/lib/*"],
-      "@/hooks/*": ["./src/hooks/*"],
-      "@/types/*": ["./src/types/*"]
-    }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
-}
-```
+## Configuration Files
 
-### 3. Tailwind Configuration
+### Environment Configuration
 
-```javascript
-// tailwind.config.js
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
-  theme: {
-    extend: {
-      colors: {
-        primary: {
-          50: "#eff6ff",
-          500: "#3b82f6",
-          900: "#1e3a8a",
-        },
-      },
-    },
-  },
-  plugins: [],
-};
-```
+- `.env.local` - Local environment variables
+- `.env.example` - Example environment file
 
-## Best Practices Summary
+### Build Configuration
 
-### 1. File Naming Conventions
+- `next.config.js` - Next.js configuration
+- `tailwind.config.js` - Tailwind CSS configuration
+- `tsconfig.json` - TypeScript configuration
+- `package.json` - Project dependencies and scripts
 
-- **Pages**: `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`
-- **Components**: `kebab-case` for folders, `PascalCase` for files
-- **Utilities**: `camelCase` for functions, `kebab-case` for files
-- **Constants**: `UPPER_SNAKE_CASE` for values, `kebab-case` for files
+## File Naming Conventions
 
-### 2. Import/Export Patterns
+### React Components
 
-```typescript
-// Use barrel exports for cleaner imports
-// components/ui/index.ts
-export { Button } from "./button";
-export { Input } from "./input";
-export { Modal } from "./modal";
+- Use PascalCase for component files: `FileUpload.tsx`
+- Use kebab-case for component directories: `file-upload/`
+- Use descriptive names that indicate purpose
 
-// Import usage
-import { Button, Input, Modal } from "@/components/ui";
-```
+### API Routes
 
-### 3. Environment Variables
+- Use lowercase with hyphens: `upload-file.ts`
+- Use RESTful naming conventions
+- Group related endpoints in directories
 
-```bash
-# .env.local
-DATABASE_URL="postgresql://..."
-NEXTAUTH_SECRET="your-secret"
-NEXTAUTH_URL="http://localhost:3000"
-```
+### Utility Functions
 
-### 4. Folder Organization Rules
+- Use camelCase: `processFile.ts`
+- Use descriptive names indicating function purpose
+- Group related utilities in directories
 
-- **Group by feature** for large applications
-- **Group by type** for smaller applications
-- **Keep related files together**
-- **Use consistent naming conventions**
-- **Separate concerns** (components, hooks, utils, types)
+### Database Models
 
-This structure provides a solid foundation for scalable Next.js 15 applications with the App Router.
+- Use PascalCase for model names: `User`, `Wireframe`
+- Use camelCase for field names: `createdAt`, `fileName`
+
+## Module Organization
+
+### Component Architecture
+
+- **Atomic Design:** Components organized by complexity level
+- **Feature-based:** Components grouped by feature area
+- **Reusability:** Common components in shared directories
+
+### API Architecture
+
+- **RESTful Design:** Standard HTTP methods and status codes
+- **Error Handling:** Consistent error response format
+- **Validation:** Input validation on all endpoints
+
+### Database Architecture
+
+- **Normalized Schema:** Proper relational database design
+- **Indexes:** Optimized for common query patterns
+- **Migrations:** Version-controlled schema changes
+
+## Development Workflow
+
+### Local Development
+
+1. Clone repository
+2. Install dependencies: `npm install`
+3. Set up environment variables
+4. Run database migrations: `npx prisma migrate dev`
+5. Start development server: `npm run dev`
+
+### Build Process
+
+1. Type checking: `npm run type-check`
+2. Linting: `npm run lint`
+3. Testing: `npm run test`
+4. Build: `npm run build`
+
+### Deployment Structure
+
+- **Vercel:** Optimized for Next.js deployment
+- **Supabase:** Database and authentication hosting
+- **Environment Variables:** Secure configuration management
